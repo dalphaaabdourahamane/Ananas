@@ -4,6 +4,7 @@
 
 #include "Variable.h"
 #include <algorithm>
+#include <time.h>
 
 int Variable::getI() const {
     return i;
@@ -79,6 +80,7 @@ void Variable::updateDomain(int u) {
 int Variable::selectionValue() {
     int res=0;
     if (setOfdomaine.size() > 1 ) {
+        srand (time(NULL));
         unsigned int r  = (rand() % (setOfdomaine.size()));
         res = this->setOfdomaine.at(r);
         this->setOfdomaine.erase(this->setOfdomaine.begin() + r);

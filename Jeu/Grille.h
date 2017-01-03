@@ -79,6 +79,12 @@ public:
     void reverseUpdateDomaine(int i, int j, int val);
 
     Grille *clone();
+
+    int getNomberFreeVariable();
+
+    int ecartLastCaseLigne(int l);
+
+    int ecartLastCaseColonne(int j);
 };
 
 #endif //KAKURO_GRILLE_H

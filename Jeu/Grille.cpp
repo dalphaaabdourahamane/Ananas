@@ -312,6 +312,36 @@ void Grille::insertLigneColonne(int val) {
     }
 }
 
+int Grille::getNomberFreeVariable() {
+    int res = 0;
+    for(Variable *v : this->setOfVariable){
+        if(! v->isIsSeleted()) res++;
+    }
+    return res;
+}
+
+int Grille::ecartLastCaseColonne(int c) {
+    int cpt = 0,som = 0;
+    for (int i = 1; i < this->size; ++i) {
+        if(this->grille[i][c].isIsSeleted()){
+            som+= this->grille[i][c].getValeur();
+            cpt ++;
+        }
+    }
+    return ((cpt - this->size - 1) == 1)? this->grille[0][c].getValeur() -som : 0;
+}
+
+int Grille::ecartLastCaseLigne(int l) {
+    int cpt = 0,som = 0;
+    for (int i = 1; i < this->size; ++i) {
+        if(this->grille[l][i].isIsSeleted()){
+            som+= this->grille[l][i].getValeur();
+            cpt ++;
+        }
+    }
+    return ((cpt - this->size - 1) == 1)? this->grille[l][0].getValeur() - som  : 0;
+}
+
 
 
 

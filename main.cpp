@@ -8,6 +8,8 @@
 
 bool forwardChecking (Grille &p);
 
+int sample (Grille &p);
+
 using namespace std;
 int main() {
     Grille *p = new Grille(5,8,1);
@@ -28,12 +30,12 @@ int main() {
     p->insertColonne(colonne);
     p->insertLigne(ligne);
 //    p->insertLigneColonne(16);
+    cout<<sample(*p)<<endl;
     p->printGrille();
-    cout<<endl;
     cout<<endl;
 
-    forwardChecking(*p);
-    p->printGrille();
+//    forwardChecking(*p);
+//    p->printGrille();
     getch();
     return 0;
 }
@@ -46,25 +48,34 @@ bool forwardChecking (Grille &p){
     for(int val :  v->getSetOfdomaine()){
         if (val != 0) {
             v->setValeur(val);
-//            v->getSetOfdomaine().erase(remove(v->getSetOfdomaine().begin(),
-//                                                   v->getSetOfdomaine().end(), val),
-//                                       v->getSetOfdomaine().end());
-            cout<<"la variable choisie est "<<*v<<endl;
             p.printGrille();
-
             if( p.updateDomaine(v->getI(), v->getJ(), val)){
                 if(p.isInconsistantColonne(v->getJ()) >= 0 && p.isInconsistantLigne(v->getI()) >= 0 ){
-                    if(forwardChecking(p)){
-                        return true;
-                    }
+                    if(forwardChecking(p)) return true;
                 }
             }
             p.reverseUpdateDomaine(v->getI(), v->getJ(), val);
-//                v->getSetOfdomaine().push_back(val);
         }
     }
     v->setIsSeleted(false);
     v->setValeur(0); ///!!!!!!!!!!!!!!!!!
     return false;
+}
+
+int sample (Grille &p){
+    while (true){
+        Variable *v = p.getFreeVariable();
+        if(! v){
+            return 0;
+        }
+        int val = v->selectionValue();
+        if (val != 0) {
+            v->setValeur(val);
+            if(! p.updateDomaine(v->getI(), v->getJ(), val) ||
+                    p.isInconsistantColonne(v->getJ()) < 0 || p.isInconsistantLigne(v->getI()) < 0 ){
+                return 1 + p.getNomberFreeVariable();
+            }
+        }
+    }
 }
 
