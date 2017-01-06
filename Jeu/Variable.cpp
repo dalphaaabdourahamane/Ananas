@@ -4,7 +4,6 @@
 
 #include "Variable.h"
 #include <algorithm>
-#include <time.h>
 
 int Variable::getI() const {
     return i;
@@ -33,9 +32,15 @@ void Variable::setValeur(int valeur) {
 vector<int> &Variable::getSetOfdomaine() {
     return setOfdomaine;
 }
+vector<int> &Variable::getRamdomSetOfdomaine() {
+    random_shuffle ( setOfdomaine.begin(), setOfdomaine.end());
+    return setOfdomaine;
+}
 
 void Variable::setSetOfdomaine(const vector<int> &setOfdomaine) {
-    Variable::setOfdomaine = setOfdomaine;
+    for(int i : setOfdomaine){
+        Variable::setOfdomaine.push_back(i);
+    }
 }
 
 bool Variable::isBorder() const {
@@ -49,6 +54,7 @@ void Variable::setBorder(bool border) {
 Variable::Variable(const vector<int> &setOfdomaine) : setOfdomaine(setOfdomaine) {}
 
 void Variable::setSetOfdomaine(int debut, int fin) {
+    this->setOfdomaine.clear();
     for (int i = debut; i <=fin ; ++i) {
         this->setOfdomaine.push_back(i);
     }
@@ -80,7 +86,6 @@ void Variable::updateDomain(int u) {
 int Variable::selectionValue() {
     int res=0;
     if (setOfdomaine.size() > 1 ) {
-        srand (time(NULL));
         unsigned int r  = (rand() % (setOfdomaine.size()));
         res = this->setOfdomaine.at(r);
         this->setOfdomaine.erase(this->setOfdomaine.begin() + r);

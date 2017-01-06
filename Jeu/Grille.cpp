@@ -155,14 +155,14 @@ Variable * Grille::getFreeVariable() {
                 break;
             }
         }
-        for (int i = j; i < this->setOfVariable.size(); ++i) {
-            Variable *& var = this->setOfVariable.at(i);
-            if(( ! var->isIsSeleted()) && (var->getSetOfdomaine().size() < res->getSetOfdomaine().size())){
-                res = var;
-            }
-        }
+//        for (int i = j; i < this->setOfVariable.size(); ++i) {
+//            Variable *& var = this->setOfVariable.at(i);
+//            if(( ! var->isIsSeleted()) && (var->getSetOfdomaine().size() < res->getSetOfdomaine().size())){
+//                res = var;
+//            }
+//        }
         if (res) {
-            res->setIsSeleted(true);
+//            res->setIsSeleted(true);
             return res ;
         }
     }
@@ -270,14 +270,10 @@ bool Grille::updateDomaine(int i, int j, int val) {
     return res;
 }
 
-Grille* Grille::clone() {
+Grille& Grille::clone() {
     vector<Variable*> res;
     Variable **tab = new Variable * [this->size];
-    for(Variable *v :  this->setOfVariable){
-        if( ! v->isIsSeleted()){
-            res.push_back(v->clone());
-        }
-    }
+
     for (int i = 0; i < this->size; ++i) {
         tab[i] =  new Variable[this->size];
     }
@@ -289,7 +285,12 @@ Grille* Grille::clone() {
             tab[i][j].setSetOfdomaine(1,this->size); ///
         }
     }
-    return new Grille(this->size,tab,res);
+    for (int i = 1; i < size ; ++i) {
+        for (int j = 1; j < size; ++j) {
+            res.push_back(&tab[i][j]);
+        }
+    }
+    return *new Grille(this->size,tab,res);
 }
 
 Grille::Grille(int size, Variable **grille, const vector<Variable *> &setOfVariable) : size(size), grille(grille),
@@ -328,7 +329,7 @@ int Grille::ecartLastCaseColonne(int c) {
             cpt ++;
         }
     }
-    return ((cpt - this->size - 1) == 1)? this->grille[0][c].getValeur() -som : 0;
+    return ((this->size - 1 - cpt) == 1)? this->grille[0][c].getValeur() -som : 0;
 }
 
 int Grille::ecartLastCaseLigne(int l) {
@@ -339,7 +340,25 @@ int Grille::ecartLastCaseLigne(int l) {
             cpt ++;
         }
     }
-    return ((cpt - this->size - 1) == 1)? this->grille[l][0].getValeur() - som  : 0;
+    return ((this->size - 1 - cpt) == 1)? this->grille[l][0].getValeur() - som  : 0;
+}
+
+Variable Grille::getXYPredictiveVariable(int x, int y) {
+    if (y != 0) {
+        for (int i = 1; i < this->size; ++i) {
+            if(! this->grille[i][y].isIsSeleted()){
+                return this->grille[i][y];
+            }
+        }
+    }
+    if (x != 0) {
+        for (int i = 1; i < this->size; ++i) {
+            if(! this->grille[x][i].isIsSeleted()){
+                return this->grille[x][i];
+            }
+        }
+    }
+//    return NULL;
 }
 
 

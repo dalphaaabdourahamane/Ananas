@@ -78,9 +78,11 @@ public:
 
     void reverseUpdateDomaine(int i, int j, int val);
 
-    Grille *clone();
+    Grille &clone();
 
     int getNomberFreeVariable();
+
+    Variable getXYPredictiveVariable(int x,int y);
 
     int ecartLastCaseLigne(int l);
 

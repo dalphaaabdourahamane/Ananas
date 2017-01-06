@@ -59,6 +59,8 @@ public:
 
     vector<int> &getSetOfdomaine();
 
+    vector<int> &getRamdomSetOfdomaine();
+
     void setSetOfdomaine(const vector<int> &setOfdomaine);
 
     bool isBorder() const;
