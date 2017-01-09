@@ -13,9 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ce70dcf5-c9b0-46c0-bf36-ebb9709d4231" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Jeu/Grille.cpp" afterPath="$PROJECT_DIR$/Jeu/Grille.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Jeu/Grille.h" afterPath="$PROJECT_DIR$/Jeu/Grille.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
     </list>
     <ignored path="Kakuro.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -441,7 +438,7 @@
       <workItem from="1483472099979" duration="11284000" />
       <workItem from="1483553412430" duration="17238000" />
       <workItem from="1483646273759" duration="23188000" />
-      <workItem from="1483987934059" duration="8857000" />
+      <workItem from="1483987934059" duration="9441000" />
     </task>
     <task id="LOCAL-00001" summary="..">
       <created>1483484356556</created>
@@ -454,7 +451,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="133467000" />
+    <option name="totallyTimeSpent" value="134051000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
