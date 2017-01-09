@@ -50,7 +50,7 @@ public:
 
     void insertLigneColonne(int val);
 
-    void printGrille();
+    void printGrille(bool var = true);
 
     void insert(int i, int j, int val);
 

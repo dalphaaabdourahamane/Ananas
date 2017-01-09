@@ -99,7 +99,7 @@ void Grille::insertLigne(int *ligne) {
     }
 }
 
-void Grille::printGrille() {
+void Grille::printGrille(bool var) {
     cout<<endl<< "size: " << this->size <<endl;
 //    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0);
     for (int i = 0; i < this->size; ++i) {
@@ -109,15 +109,17 @@ void Grille::printGrille() {
         cout<<endl;
     }
 
-    for(Variable *& v : this->setOfVariable){
-        cout<<*v<<"[ ";
-        if(v->getSetOfdomaine().size() > 0){
-            for (int i = 0; i < v->getSetOfdomaine().size()-1; ++i) {
-                cout<<v->getSetOfdomaine().at(i)<<", ";
+    if (var) {
+        for(Variable *& v : this->setOfVariable){
+            cout<<*v<<"[ ";
+            if(v->getSetOfdomaine().size() > 0){
+                for (int i = 0; i < v->getSetOfdomaine().size()-1; ++i) {
+                    cout<<v->getSetOfdomaine().at(i)<<", ";
+                }
+                cout<<v->getSetOfdomaine().at(v->getSetOfdomaine().size()-1);
             }
-            cout<<v->getSetOfdomaine().at(v->getSetOfdomaine().size()-1);
+            cout<<" ]"<<endl;
         }
-        cout<<" ]"<<endl;
     }
 
 }

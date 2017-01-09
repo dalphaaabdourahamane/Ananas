@@ -22,7 +22,132 @@ using namespace std;
 int main() {
     srand (time(NULL));
 
-    Grille *p = new Grille(5,8,1);
+    Grille *p = new Grille(3,3,1);
+
+
+    int menu;
+    do
+    {
+        cout<<endl<<" _____________ MENU ____________"<<endl;
+            cout<<"|         1. Creation           |"<<endl;
+            cout<<"|         2. Generation         |"<<endl;
+            cout<<"|         0. Quitter            |"<<endl;
+            cout<<"|_______________________________|"<<endl;
+        cout<<"Choix : ";
+        cin>>menu;
+        cout<<endl;
+
+        switch(menu)
+        {
+            case 1 :{
+                system("cls");
+                int rep;
+                cout<<"Remplir avec UN SEUL CHIFFRE (0 = OK )? : ";cin>>rep;
+                switch(rep){
+                    case 0: {
+                        int val =10;
+                        int taille =5,min=1,max=5;
+
+                        system("cls");
+                        cout<<"Donner la TAILLE de la grille : ";cin>>taille;
+                        cout<<"Donner le min du domaine : ";cin>>min;
+                        cout<<"Donner le max du domaine: ";cin>>max;
+                        cout<<"Donner le chiffre : ";cin>>val;
+
+                        *p = *new Grille(taille,max,min);
+                         p->insertLigneColonne(val);
+
+                        p->printGrille();
+
+                        cout<<endl<<" Taper une touche pour le resoudre "<<endl;
+                        getch();
+
+                        system("cls");
+                        forwardChecking(*p);
+                        p->printGrille();
+                        getch();
+                        system("cls");
+
+                    }
+                        break;
+                    default:{
+                        int taille =5,min=1,max=5;
+
+                        system("cls");
+                        cout<<"Donner la TAILLE de la grille : ";cin>>taille;
+                        cout<<"Donner le min du domaine : ";cin>>min;
+                        cout<<"Donner le max du domaine: ";cin>>max;
+
+                        *p = *new Grille(taille,max,min);
+                            int *ligne = new int[taille];
+                            int *colonne = new int[taille];
+
+                        cout<<"Saisir la Ligne "<<endl;
+                        for(int i = 0; i<taille; i++){
+                            cout<<i<<" : ";cin>>ligne[i];
+                        }
+
+                        cout<<"Saisir la Colonne "<<endl;
+                        for(int i = 0; i<taille; i++){
+                            cout<<i<<" : ";cin>>colonne[i];
+                        }
+                        p->insertLigne(ligne);
+                        p->insertColonne(colonne);
+
+                        system("cls");
+                        p->printGrille();
+
+                        cout<<endl<<" Taper une touche pour le resoudre "<<endl;
+                        getch();
+
+                        system("cls");
+                        forwardChecking(*p);
+                        p->printGrille();
+                        getch();
+                        system("cls");
+                    }
+                        break;
+                }
+            } break;
+
+            case 2 :{
+                int taille =5,min=1,max=5;
+
+                system("cls");
+                cout<<"Donner la TAILLE de la grille : ";cin>>taille;
+                cout<<"Donner le min du domaine : ";cin>>min;
+                cout<<"Donner le max du domaine: ";cin>>max;
+
+                system("cls");
+                cout<<"GENERATE GRILLE ....";
+                *p = *new Grille(taille,max,min);
+
+                generateGrille(*p);
+                SommeGrille(*p);
+                deleteGrilleValue(*p,min,max);
+
+                p->printGrille();
+
+                cout<<endl<<" Taper une touche pour le resoudre "<<endl;
+                getch();
+
+                system("cls");
+                forwardChecking(*p);
+                p->printGrille();
+                getch();
+                system("cls");
+
+            }
+                break;
+
+            default:break;
+        }
+
+    }while (menu!=0);
+    system("cls");
+
+
+
 //    int *colonne = new int[5];
 //    colonne[0] = 0;
 //    colonne[1] = 14;
@@ -39,19 +164,19 @@ int main() {
 //
 //    p->insertColonne(colonne);
 //    p->insertLigne(ligne);
-////    p->insertLigneColonne(16);
-////    for (int i = 0; i < 5 ; ++i) {
-////        cout<<sample(p->clone())<<endl;
-////    }
-    p->printGrille();
-    cout<<endl;
-
-    generateGrille(*p);
-    SommeGrille(*p);
-    p->printGrille();
-    deleteGrilleValue(*p,1,8);
-    forwardChecking(*p);
-    p->printGrille();
+//    p->insertLigneColonne(16);
+//    for (int i = 0; i < 5 ; ++i) {
+//        cout<<sample(p->clone())<<endl;
+//    }
+//    p->printGrille();
+//    cout<<endl;
+//
+//    generateGrille(*p);
+//    SommeGrille(*p);
+//    p->printGrille();
+//    deleteGrilleValue(*p,1,8);
+//    forwardChecking(*p);
+//    p->printGrille();
 //    getch();
     return 0;
 }
@@ -67,7 +192,6 @@ bool forwardChecking (Grille &p,int predictionValue,int predictionI ,int predict
         for(int val :  v->getSetOfdomaine()){
             if (val != 0) {
                 v->setValeur(val);
-//                p.printGrille();
                 if( p.updateDomaine(v->getI(), v->getJ(), val)){
                     if(p.isInconsistantColonne(v->getJ()) >= 0 && p.isInconsistantLigne(v->getI()) >= 0 ){
                         if ( ! p.ecartLastCaseLigne(v->getI()) && ! p.ecartLastCaseColonne(v->getJ())) {
@@ -75,7 +199,6 @@ bool forwardChecking (Grille &p,int predictionValue,int predictionI ,int predict
                         } else {
                             int ecartColonne = p.ecartLastCaseColonne(v->getJ());
                             int ecartLigne = p.ecartLastCaseLigne(v->getI());
-//                            cout<<ecartLigne<<" *** "<<ecartColonne<<v<<endl;
                             Variable pre = p.getXYPredictiveVariable((!ecartLigne)?0:v->getI(),(!ecartColonne)?0:v->getJ());
 
                             if(ecartColonne) {
@@ -109,19 +232,14 @@ bool forwardChecking (Grille &p,int predictionValue,int predictionI ,int predict
         v->setIsSeleted(true);
         int val = predictionValue;
         v->setValeur(val);
-//        cout<<"#### : "<<v<<endl;
-//        p.printGrille();
         if( p.updateDomaine(v->getI(), v->getJ(), val)){
             if(p.isInconsistantColonne(v->getJ()) >= 0 && p.isInconsistantLigne(v->getI()) >= 0 ){
                 if ( ! p.ecartLastCaseLigne(v->getI()) && ! p.ecartLastCaseColonne(v->getJ())) {
                     if(forwardChecking(p)) return true;
                 } else {
-//                    cout<<p.ecartLastCaseLigne(v->getI())<<" ***# "<<p.ecartLastCaseColonne(v->getJ())<<endl;
                     int ecartColonne = p.ecartLastCaseColonne(v->getJ());
                     int ecartLigne = p.ecartLastCaseLigne(v->getI());
                     Variable pre = p.getXYPredictiveVariable((!ecartLigne)?0:v->getI(),(!ecartColonne)?0:v->getJ());
-
-
 
                     if(ecartColonne) {
                         if (find(p.getGrille()[pre.getI()][pre.getJ()].getSetOfdomaine().begin(),
@@ -164,7 +282,6 @@ bool generateGrille (Grille &p ){
         if( p.updateDomaine(v->getI(), v->getJ(), val)){
             if(generateGrille(p)) return true;
         } else p.reverseUpdateDomaine(v->getI(), v->getJ(), val);
-        p.printGrille();
     }
     v->setIsSeleted(false);
     v->setValeur(0);
